@@ -1,0 +1,11 @@
+*.aux
+*.bm
+*.dvi
+*.fab_latexmk
+*.fls
+*.log
+*.pdf
+*.ps
+*.gz
+*.toc
+*.vrb
