@@ -1,7 +1,7 @@
 *.aux
 *.bm
 *.dvi
-*.fab_latexmk
+*.fdb_latexmk
 *.fls
 *.log
 *.pdf
