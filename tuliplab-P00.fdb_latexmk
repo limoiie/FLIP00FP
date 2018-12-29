@@ -1,5 +1,6 @@
 # Fdb version 3
-["pdflatex"] 1545978233 "e:/Projects/tex/FLIP00FP/tuliplab-P00.tex" "tuliplab-P00.pdf" "tuliplab-P00" 1545978233
+["pdflatex"] 1545981635 "e:/Projects/tex/FLIP00FP/tuliplab-P00.tex" "tuliplab-P00.pdf" "tuliplab-P00" 1545981635
+  ".git/gitHeadInfo.gin" 1545980181 566 e0f6f08397032ca6b0c1019a0979031c ""
   "c:/texlive/2018/texmf-dist/fonts/enc/dvips/base/8r.enc" 1545921272 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "c:/texlive/2018/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1545921042 2971 def0b6c1f0b107b3b936def894055589 ""
   "c:/texlive/2018/texmf-dist/fonts/map/fontname/texfonts.map" 1545921454 3332 103109f5612ad95229751940c61aada0 ""
@@ -146,6 +147,7 @@
   "c:/texlive/2018/texmf-dist/tex/latex/fouriernc/fouriernc.sty" 1545921474 1311 84623040e092276cb869b40b1179dc87 ""
   "c:/texlive/2018/texmf-dist/tex/latex/fouriernc/t1fnc.fd" 1545921474 853 bf1a149b86e36dfa4f5900e28e7a599d ""
   "c:/texlive/2018/texmf-dist/tex/latex/geometry/geometry.sty" 1545921501 41645 0653033a985e06c69a2a9cea9a95e31a ""
+  "c:/texlive/2018/texmf-dist/tex/latex/gitinfo2/gitexinfo.sty" 1545921518 5367 cd68a8ed31a8bc5651b231e7070b62af ""
   "c:/texlive/2018/texmf-dist/tex/latex/gitinfo2/gitinfo2.sty" 1545921518 7482 65a71f05d6e1a72fc21f1bc4ebf315bf ""
   "c:/texlive/2018/texmf-dist/tex/latex/graphics-cfg/color.cfg" 1545921546 1213 620bba36b25224fa9b7e1ccb4ecb76fd ""
   "c:/texlive/2018/texmf-dist/tex/latex/graphics-cfg/graphics.cfg" 1545921546 1224 978390e9c2234eab29404bc21b268d1e ""
@@ -222,16 +224,16 @@
   "c:/texlive/texmf-local/tex/latex/powerdot-tuliplab/logos/tulip-wordmark.eps" 1545914692 370272 9864d595be5263b1921457c79e682441 ""
   "c:/texlive/texmf-local/tex/latex/powerdot-tuliplab/logos/tulip.eps" 1545914692 353318 bc99fda6f9914318ae6c34ce80c2492f ""
   "c:/texlive/texmf-local/tex/latex/powerdot-tuliplab/powerdot-tuliplab.sty" 1545914692 6788 d1a155932dfc46c109af3402e305e8a0 ""
-  "e:/Projects/tex/FLIP00FP/tuliplab-P00.tex" 1545978215 9880 2a2903ceb504cd3edcf2500d58cffde2 ""
+  "e:/Projects/tex/FLIP00FP/tuliplab-P00.tex" 1545981619 9879 2075bfef1306a6dcff1e040b268e1037 ""
   "nul" 0 0 d41d8cd98f00b204e9800998ecf8427e ""
-  "tuliplab-P00.aux" 1545978233 9 a94a2480d3289e625eea47cd1b285758 ""
+  "tuliplab-P00.aux" 1545981635 9 a94a2480d3289e625eea47cd1b285758 ""
   "tuliplab-P00.bm" 0 -1 0 ""
-  "tuliplab-P00.tex" 1545978215 9880 2a2903ceb504cd3edcf2500d58cffde2 ""
+  "tuliplab-P00.tex" 1545981619 9879 2075bfef1306a6dcff1e040b268e1037 ""
   "tuliplab-P00.vrb" 0 -1 0 ""
   (generated)
-  "tuliplab-P00.pdf"
-  "tuliplab-P00.aux"
-  "tuliplab-P00.log"
   "tuliplab-P00.bm"
+  "tuliplab-P00.log"
   "tuliplab-P00.vrb"
+  "tuliplab-P00.aux"
+  "tuliplab-P00.pdf"
   "tuliplab-P00.toc"

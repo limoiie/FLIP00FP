@@ -287,6 +287,11 @@ INPUT c:/texlive/2018/texmf-dist/tex/latex/etoolbox/etoolbox.sty
 INPUT c:/texlive/2018/texmf-dist/tex/latex/etoolbox/etoolbox.sty
 INPUT c:/texlive/2018/texmf-dist/tex/latex/eso-pic/eso-pic.sty
 INPUT c:/texlive/2018/texmf-dist/tex/latex/eso-pic/eso-pic.sty
+INPUT ./.git/gitHeadInfo.gin
+INPUT ./.git/gitHeadInfo.gin
+INPUT ./.git/gitHeadInfo.gin
+INPUT c:/texlive/2018/texmf-dist/tex/latex/gitinfo2/gitexinfo.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/gitinfo2/gitexinfo.sty
 INPUT c:/texlive/2018/texmf-dist/tex/latex/listings/listings.sty
 INPUT c:/texlive/2018/texmf-dist/tex/latex/listings/listings.sty
 INPUT c:/texlive/2018/texmf-dist/tex/latex/listings/lstmisc.sty
