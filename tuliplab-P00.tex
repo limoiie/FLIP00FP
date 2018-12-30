@@ -111,210 +111,284 @@ list={labelsep=1em,leftmargin=*,itemsep=0pt,topsep=5pt,parsep=0pt},
 \begin{slide}[toc=,bm=]{Overview}
 \tableofcontents[content=sections]
 \end{slide}
-\section{First section}
-\begin{slide}[toc=,bm=]{Overview of the first section}
+
+
+\section{Introduction}
+
+\begin{slide}[toc=,bm=]{Overview of the Introduction}
 \tableofcontents[content=currentsection,type=1]
 \end{slide}
-\begin{slide}{Some slide}
-\end{slide}
 
-\begin{slide}{Content}
+\begin{slide}{Description of Competition}
   \begin{itemize}
-    \item Introduction\pause
-    \item Background
-    \item Method \pause
-      \begin{itemize}
-      \item Algorithm
-      \item Proof
-      \end{itemize}
-    \item Experiment
-    \item Conclusions
+    \item Competition \pause
+    \begin{itemize}
+      \item MNIST ("Modified National Institute of Standards and Technology") is the 
+      de facto “hello world” dataset of computer vision.
+    \end{itemize}
+    \item Goal \pause
+    \begin{itemize}
+      \item goal is to correctly identify digits from a dataset of tens of thousands of handwritten images  
+    \end{itemize}    
   \end{itemize}
 \end{slide}
 
-
-\section{Itemize Pause}
-
-
-\begin{slide}{Pause longer}
-\begin{itemize}
-\item A \pause
-\item B \pause[2]
-\item C
-\end{itemize}
-\end{slide}
-
-
-\begin{slide}{Multiple pauses}
-power\pause dot \pause
-\begin{itemize}
-\item Let me pause\ldots \pause
-\item \ldots while I talk \pause and chew bubble gum. \pause
-\item Perhaps you’ll be persuaded.
-\item Perhaps not.
-\end{itemize}
-\end{slide}
-
-
-\begin{slide}{Type 1 itemize}
-\begin{itemize}[type=1]
-\item A \pause
-\item B \pause
-\item C
-\end{itemize}
-\end{slide}
-
-\begin{slide}{Type 1 enumerate}
-\begin{enumerate}[type=1]%[label=\romani*)]
-\item A \pause
-\item B \pause
-\item C
-\end{enumerate}
-\end{slide}
-
-
-\begin{slide}{Nested lists}
-\begin{itemize}
-\item A\pause
-\begin{itemize}[type=1]
-\item B\pause
-\end{itemize}
-\item C
-\end{itemize}
-\end{slide}
-
-\section{Overlay}
-
-\begin{slide}{Active itemize}
-\begin{itemize}[type=1]
-\item<1> A
-\item<2> B
-\item<3> C
-\end{itemize}
-\end{slide}
-
-\begin{slide}{Simple onslide}
-\onslide{1,2}{power}\onslide{2}{dot}
-\end{slide}
-
-\begin{slide}{Simple onslide+}
-\texttt{onslide }: \onslide{1}{power}\onslide{2}{dot}\\
-\texttt{onslide+}: \onslide+{1}{power}\onslide+{2}{dot}
-\end{slide}
-
-\begin{slide}{Simple onslide*}
-\texttt{onslide }: \onslide{1}{power}\onslide{2}{dot}\\
-\texttt{onslide+}: \onslide+{1}{power}\onslide+{2}{dot}\\
-\texttt{onslide*}: \onslide*{1}{power}\onslide*{2}{dot}
-\end{slide}
-
-\begin{slide}{Lists}
-\onslide{10}{on overlay 10 only}\par
-\onslide{-5}{on every overlay before and including overlay 5}\par
-\onslide{5-}{on every overlay after and including overlay 5}\par
-\onslide{2-5}{on overlays 2 through 5, inclusive}\par
-\onslide{-3,5-7,9-}{on every overlay except overlays 4 and 8}
-\end{slide}
-
-\begin{slide}{Relative overlays}
-\begin{itemize}
-\item A \pause
-\item B \onslide{+1}{(visible 1 overlay after B)}\pause
-\item C \onslide{+2-}{(appears 2 overlays after C, visible until the end)}
-\pause
-\item D \onslide{+1-6}{(appears 1 overlay after D, visible until overlay 6)}
-\pause
-\item E \pause
-\item F \pause
-\item G \onslide{+1-+3}{(appears 1 overlay after G for 3 overlays)}\pause
-\item H \pause
-\item I \pause
-\item J \pause
-\item K
-\end{itemize}
-\end{slide}
-
-
-\begin{slide}{Slide 2}
+\begin{slide}{Dataset}
   \begin{itemize}
-    \item<1-> Here
-    \begin{itemize}
-      \item<2-> we
+    \item Files\pause
       \begin{itemize}
-        \item<3-> demonstrate
-        \begin{itemize}
-          \item<4-> the itemize environment
-        \end{itemize}
+        \item train.csv (contains 42000 items)
+        \item test.csv (contains 28000 items)
+        \item sample_submission.csv
       \end{itemize}
+  \end{itemize}
+  \pause
+  \begin{figure}[h]
+    \begin{minipage}[t]{0.4\linewidth}
+    \centering
+    \includegraphics[width=1.2\textwidth]{figures/data-train.eps}
+    \caption{train dataset}
+    \label{fig:train-dataset}
+    \end{minipage} 
+    \hfill
+    \begin{minipage}[t]{0.4\linewidth}
+    \centering
+    \includegraphics[width=1.2\textwidth]{figures/data-test.eps}
+    \caption{test dataset}
+    \label{fig:test-dataset}
+    \end{minipage}
+  \end{figure}
+\end{slide}
+
+\begin{slide}{Preview}
+  \begin{itemize}
+    \item Distribution of average pixels on different labels
+  \end{itemize}
+  \pause
+  \begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{figures/distribution-avg-pixels.eps}
+    \caption{distribution of average pixels }
+    \label{fig:distribution-avg-pixels}
+  \end{figure}
+\end{slide}
+
+
+\section{Data Preprocess}
+
+\begin{slide}{Data Visualization}
+  \begin{itemize}
+    \item Convert csv file into labeled pictures \pause
+    \begin{figure}[h]
+      \begin{minipage}[t]{0.4\linewidth}
+        \centering
+        \includegraphics[width=1.2\textwidth]{figures/pic-categories.eps}
+        \caption{categories of pictures}
+        \label{fig:categories-picture}
+      \end{minipage}
+      \hfill
+      \begin{minipage}[t]{0.4\linewidth}
+        \centering
+        \includegraphics[width=1.2\textwidth]{figures/pic-label1.eps}
+        \caption{pictures labeled as 1}
+        \label{fig:pic-label1}
+      \end{minipage} 
+    \end{figure}
+  \end{itemize}
+\end{slide}
+
+\begin{slide}{Normalization}
+  \begin{itemize}
+  \item All the 784 attributes of one example are gray values of pixel \pause
+  \item Standard Normalization may be a bad idea \pause
+
+  $$
+  z = \frac{X-\mu}{\delta}
+  $$
+  \pause
+  \begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{figures/knn-z.eps}
+    \caption{Affact of z-normalization }
+    \label{fig:knnz}
+  \end{figure}
+  \end{itemize}
+\end{slide}
+
+\begin{slide}{Dimension Reduce}
+  \begin{itemize}
+    \item PCA
+    \begin{itemize}
+      \item is a statistical procedure that uses an orthogonal transformation to
+      convert a set of observations of possibly correlated variables (entities 
+      each of which takes on various numerical values) into a set of values of
+      linearly uncorrelated variables called principal components -- WIKI \pause
     \end{itemize}
   \end{itemize}
+  \begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{figures/pca.eps}
+    \caption{pca}
+    \label{fig:pca}
+  \end{figure}
 \end{slide}
 
-\begin{slide}{Slide 3}
-  \begin{enumerate}[type=1]
-    \item<1> Here
-    \begin{enumerate}
-      \item<2> we
-      \begin{enumerate}
-        \item<3> demonstrate
-        \begin{enumerate}
-          \item<4> the enumerate environment
-        \end{enumerate}
-      \end{enumerate}
-    \end{enumerate}
-  \end{enumerate}
+\begin{slide}{Dimension Reduce}
+  \begin{itemize}
+    \item PCA
+    \begin{itemize}
+      \item is a statistical procedure that uses an orthogonal transformation to
+      convert a set of observations of possibly correlated variables (entities 
+      each of which takes on various numerical values) into a set of values of
+      linearly uncorrelated variables called principal components -- WIKI
+    \end{itemize}
+  \end{itemize}
+  \begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{figures/pca-140.eps}
+    \caption{pca with 140 dimension}
+    \label{fig:pca140}
+  \end{figure}
+\end{slide}
+
+\begin{slide}{Dimension Reduce}
+  \begin{itemize}
+    \item PCA
+    \begin{itemize}
+      \item is a statistical procedure that uses an orthogonal transformation to
+      convert a set of observations of possibly correlated variables (entities 
+      each of which takes on various numerical values) into a set of values of
+      linearly uncorrelated variables called principal components -- WIKI
+    \end{itemize}
+  \end{itemize}
+  \begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{figures/pca-de.eps}
+    \caption{pca error rate on dimensions}
+    \label{fig:pcade}
+  \end{figure}
+\end{slide}
+
+\begin{slide}{Dimension Reduce}
+  \begin{itemize}
+    \item Let n_component of PCA be 40
+  \end{itemize}
 \end{slide}
 
 
-\section{Codings}
+\section{Model Selection}
 
-\begin{slide}[method=direct]{Slide 2}
-Steps 1 and 2:
-\begin{code}
-compute a;`\pause'
-compute b;
-\end{code}
+\begin{slide}{K-means}
+  \begin{itemize}
+    \item Let n_clusters be 10 \pause
+    \item Init centers randomly \pause
+    \begin{figure}[h]
+      \begin{minipage}[t]{0.4\linewidth}
+        \centering
+        \includegraphics[width=1.2\textwidth]{figures/label-count0.eps}
+        \caption{distribution of labels for 0}
+        \label{fig:label-count0}
+      \end{minipage}
+      \pause
+      \hfill
+      \begin{minipage}[t]{0.4\linewidth}
+        \centering
+        \includegraphics[width=1.2\textwidth]{figures/label-count-9.eps}
+        \caption{distribution of labels}
+        \label{fig:label-count-9}
+      \end{minipage} 
+    \end{figure}
+  \end{itemize}
 \end{slide}
 
-\begin{slide}[method=file]{Slide 3}
-Steps 1 and 2:
-\begin{code}
-compute a;`\pause'
-compute b;
-\end{code}
+\begin{slide}{SVM}
+  \begin{itemize}
+  \item GridSearchCV \pause
+  \item parameters = {'kernel': ('linear', 'poly', 'rbf')} \pause
+  \item mean of scores under 5-fold cv: 0.891405
+  \end{itemize}
+\end{slide}
+
+\begin{slide}{KNN}
+  \begin{itemize}
+    \item is a non-parametric method used for classification and regression.
+    In both cases, the input consists of the k closest training examples in
+    the feature space \pause
+    \item selection of K
+  \end{itemize}
+  \begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{figures/knn-k.eps}
+    \caption{accurary of knn with different Ks}
+    \label{fig:knn-k}
+  \end{figure}
+\end{slide}
+
+\begin{slide}{CNN-Constructure}
+  \begin{itemize}
+    \item one layer \pause
+    \begin{figure}[h]
+      \centering
+      \includegraphics[width=0.5\linewidth]{figures/layer1.eps}
+      \caption{One Layer}
+      \label{fig:one-layer}
+    \end{figure}
+    \pause
+    \item Three layer \pause
+    \begin{figure}[h]
+      \centering
+      \includegraphics[width=0.7\textwidth]{figures/layer3.eps}
+      \caption{Three Layer}
+      \label{fig:three-layer}
+    \end{figure}  
+  \end{itemize}
+\end{slide}
+
+\begin{slide}{CNN-Tune and Validate}
+  \begin{itemize}
+    \item Loss function: softmax_cross_entropy_with_logits
+    \item Optimizer: RMSPropOptimizer
+    \item Comparation of 5-fold CV between two mode
+  \end{itemize}
+  \begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figures/compare-layers.eps}
+    \caption{Comparation between two models}
+    \label{fig:comparation-two-models}
+  \end{figure}  
+\end{slide}
+
+\begin{slide}{Comparation among Different Models}
+  \begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figures/comparation.eps}
+    \caption{Comparation}
+    \label{fig:comparation}
+  \end{figure}  
+\end{slide}
+
+\section{Experiment}
+
+\begin{slide}{Rank of Competition}
+  \begin{itemize}
+    \item Score: 0.98957
+    \item Rank: 1233/2723
+  \end{itemize}
+  \begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/competition.eps}
+    \caption{Result of the best submission}
+    \label{fig:result-of-best-submission}
+  \end{figure} 
 \end{slide}
 
 
-%% Coding Example
-\begin{slide}[method=direct]{Hello World in C}
-  \begin{lstlisting}[language=c,gobble=4]
-    #include <stdio.h>
+\section{Summary}
 
-    int main(int c, char **v) {
-      fprintf(stdout, "Hello, world!\n");
-      return 0;
-    }
-  \end{lstlisting}
-\end{slide}
-\begin{note}{Personal Note}
- This is a test. Let us try
-\begin{description}
- \item[ab] ab 
- \item[bb] ab 
- \item[bb] ab 
-\end{description}
-\end{note}
-
-\section{Citations}
-
-\begin{slide}{Cite}
-\cite{someone}
-\end{slide}
-
-\begin{slide}{References}
-\begin{thebibliography}{1}
-\bibitem{someone} Article of someone.
-\end{thebibliography}
+\begin{slide}{Thanks}
+  \begin{itemize}
+    \item Thanks for listening~
+  \end{itemize}
 \end{slide}
 
 % \begin{slide}{References (1)}
@@ -335,108 +409,6 @@ compute b;
 % \bibliographystyle{plain}
 % % \bibliography{YourBib}
 % \end{slide}
-
-
-\section{Two Columns}
-
-\begin{slide}{Two columns}
-Here are two columns.
-
-\twocolumn[
-lfrprop={linestyle=dotted,linewidth=3pt},
-lfrheight=4cm,rfrheight=5cm,lineheight=3cm,topsep=0.3cm
-]{left}{right}
-
-% \hline
-Another two columns:
-
-\twocolumn[
-\savevalue{lfrheight}=3cm,
-\savevalue{lfrprop}={
-linestyle=dotted,framearc=.2,linewidth=3pt},
-rfrheight=\usevalue{lfrheight},
-rfrprop=\usevalue{lfrprop}
-]{left}{right}
-
-
-Those were two columns.
-\end{slide}
-
-\begin{slide}[method=direct]{Two Columns}
-  \begin{lstlisting}[language=c,gobble=4]
-    #include <stdio.h>
-
-    int main(int c, char **v) {
-      fprintf(stdout, "Hello, world!\n");
-      return 0;
-    }
-  \end{lstlisting}
-Another two columns:
-
-\twocolumn[
-\savevalue{lfrheight}=3cm,
-\savevalue{lfrprop}={
-linestyle=dotted,framearc=.2,linewidth=3pt},
-rfrheight=\usevalue{lfrheight},
-rfrprop=\usevalue{lfrprop}
-]{
-\begin{itemize}
-\item A \pause
-\item B \pause[2]
-\item C
-\end{itemize}
-}
-{
-     \centerline{\includegraphics[scale=.3]{logos/tulip-logo.eps}}
-}
-
-\end{slide}
-
-
-
-\section{Misc}
-
-\begin{emptyslide}{}
-\centering
-\vspace{\stretch{1}}
-\includegraphics[height=0.8\slideheight]{logos/tulip-logo.eps}
-\vspace{\stretch{1}}
-\end{emptyslide}
-
-
-\begin{slide}[toc=,bm={LaTeX, i*i=-1}]{\color{red}\LaTeX, $i^2=-1$}
-My slide contents.
-\end{slide}
-
-%%==========================================================================================
-% TODO: Contact Page
-\begin{wideslide}[toc=,bm=]{Contact Information}
-\centering
-\vspace{\stretch{1}}
-\twocolumn[
-lcolwidth=0.35\linewidth,
-rcolwidth=0.65\linewidth
-]
-{
-% \centerline{\includegraphics[scale=.2]{tulip-logo.eps}}
-}
-{
-\vspace{\stretch{1}}
-Associate Professor \emph{Gang Li}\\
-School of Information Technology\\
-Deakin University, Geelong, Australia
-\begin{description}
- \item[Email] \href{mailto:gangli@acm.org}
- {\textsc{\footnotesize{gangli@acm.org}}}
- 
- \item[Lab] \href{http://www.tulip.org.au}
- {\textsc{\footnotesize{Team for Universal Learning and Intelligent Processing}}} 
-\end{description}
-} 
-\vspace{\stretch{1}}
-\end{wideslide}
-
-
 
 \end{document}
 
