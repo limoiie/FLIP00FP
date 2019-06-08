@@ -1,0 +1,39 @@
+\begin{thebibliography}{1}
+
+\bibitem{RN139}
+Nicholas Carlini and David Wagner.
+\newblock Towards evaluating the robustness of neural networks.
+\newblock In {\em 2017 IEEE Symposium on Security and Privacy (SP)}, pages
+  39--57. IEEE.
+
+\bibitem{RN144}
+Yinpeng Dong, Fangzhou Liao, Tianyu Pang, Hang Su, Jun Zhu, Xiaolin Hu, and
+  Jianguo Li.
+\newblock Boosting adversarial attacks with momentum.
+\newblock In {\em Proceedings of the IEEE Conference on Computer Vision and
+  Pattern Recognition}, pages 9185--9193.
+
+\bibitem{gong2017adversarial}
+Zhitao Gong, Wenlu Wang, and Wei-Shinn Ku.
+\newblock Adversarial and clean data are not twins.
+\newblock {\em arXiv preprint arXiv:1704.04960}, 2017.
+
+\bibitem{RN48}
+Ian~J Goodfellow, Jonathon Shlens, and Christian Szegedy.
+\newblock Explaining and harnessing adversarial examples.
+\newblock {\em arXiv preprint arXiv:1412.6572}, 2014.
+
+\bibitem{RN49}
+Nicolas Papernot, Patrick McDaniel, Xi~Wu, Somesh Jha, and Ananthram Swami.
+\newblock Distillation as a defense to adversarial perturbations against deep
+  neural networks.
+\newblock In {\em 2016 IEEE Symposium on Security and Privacy (SP)}, pages
+  582--597. IEEE.
+
+\bibitem{RN143}
+Christian Szegedy, Wojciech Zaremba, Ilya Sutskever, Joan Bruna, Dumitru Erhan,
+  Ian Goodfellow, and Rob Fergus.
+\newblock Intriguing properties of neural networks.
+\newblock {\em arXiv preprint arXiv:1312.6199}, 2013.
+
+\end{thebibliography}

@@ -56,6 +56,7 @@ fleqn,leqno]{powerdot}
 \usepackage{breqn}
 \usepackage{multirow}
 \usepackage{gitinfo2}
+\usepackage{multicol}
 
 
 \usepackage{listings}
@@ -78,11 +79,11 @@ basicstyle=\footnotesize\ttfamily}
 % title
 % TODO: Customize to your Own Title, Name, Address
 %
-\title{New York City Taxi Trip Duration}
+\title{Targeted Adversarial Attack}
 \author{
 Gengwang Li
 \\
-Flip00
+Flip01
 % \href{mailto:gangli@acm.org}{gangli@acm.org}
 % \and % more authors
 }
@@ -96,7 +97,7 @@ Flip00
 rf=\href{http://www.tulip.org.au}{
 Last Changed by: \textsc{\gitCommitterName}\ v0.1-\gitDescribe\ (\gitAuthorDate)
 },
-cf=\hyperlink{blankslide}{Flip00 Final Presentation},
+cf=\hyperlink{blankslide}{Flip01 Mid Presentation},
 trans=Fade,
 list={labelsep=1em,leftmargin=*,itemsep=0pt,topsep=5pt,parsep=0pt},
 % counters={theorem,lemma},
@@ -119,449 +120,478 @@ list={labelsep=1em,leftmargin=*,itemsep=0pt,topsep=5pt,parsep=0pt},
 \tableofcontents[content=currentsection,type=0]
 \end{slide}
 
-\begin{slide}{Description of Competition}
+\begin{slide}{Competition}
   \begin{itemize}
-    \item Description \pause
+    \item Challenge \pause
     \begin{itemize}
-      \item Challenging to build a model that predicts the total ride duration of taxi trips in New York City.
-    \end{itemize} \pause
+      \item Targeted attack classifier.
+      \begin{figure}[h]
+        \begin{minipage}[t]{0.3\linewidth}
+          \centering
+          \includegraphics[width=1.0\textwidth]{figures2/max_depth_score.eps}
+          \caption{Panda}
+          \label{fig:source-pic}
+        \end{minipage} \pause
+        +
+        \begin{minipage}[t]{0.3\linewidth}
+          \centering
+          \includegraphics[width=1.0\textwidth]{figures2/max_depth_score.eps}
+          \caption{Distortion}
+          \label{fig:distortion}
+        \end{minipage} \pause
+        =
+        \begin{minipage}[t]{0.3\linewidth}
+          \centering
+          \includegraphics[width=1.0\textwidth]{figures2/max_depth_score.eps}
+          \caption{Monkey}
+          \label{fig:attacked-pic}
+        \end{minipage}
+      \end{figure}
+      \item Develop an adversarial attack that causes image classifiers to predict a specific target class.
+    \end{itemize}
+  \end{itemize}
+\end{slide}
+
+\begin{slide}{Conditions}
+  \begin{itemize}
     \item Given \pause
+    \begin{figure}[h]
+      \centering
+      \includegraphics[width=0.4\textwidth]{figures2/train_null.eps}
+      \caption{Illumination}
+      \label{fig:missing-value-pic}
+    \end{figure} \pause
     \begin{itemize}
-      \item Geographic positions of picking up and dropoffing;
-      \item Timestamps of picking up and dropoffing;
-      \item Number of passengers;
-      \item Vendor id of the texi;
-      \item and a flag indicates if the trip record was sent with delay
-    \end{itemize} \pause
+      \item A set of images from ImageNet2012 which going to be attacked; \pause 
+      \item The oracle at the back which was trained on dataset ImageNet2012; \pause
+      \item We can never touch nor query the oracle.
+    \end{itemize}
+  \end{itemize}
+\end{slide}
+
+\begin{slide}{Evaluation}
+  \begin{itemize}
+    \item Submission \pause
+    \begin{itemize}
+      \item Attackers \pause
+      \begin{itemize}
+        \item given source images and target type; \pause
+        \item return targeted attacked image; \pause
+      \end{itemize}
+      \item Checkpoints, dataset or anything will be used by attackers \pause
+      \begin{itemize}
+        \item pretrained models used by attackers; \pause
+      \end{itemize}
+    \end{itemize}
+  \end{itemize}
+  \begin{itemize}
     \item Evaluation \pause
     \begin{itemize}
       \item The evaluation metric of this competition is Root Mean Squared Logarithmic Error.
       $$
-      \epsilon = \sqrt{\frac{1}{n} \sum_{i=1}^{n}{(log(p_i + 1) - log(a_i + 1))^2}}
+      score = \frac{num_{classified\_as\_target}}{num_{all}}
       $$ 
-      \pause
-      \item $\epsilon$ is the RMSLE value (score)
-      \item $n$ is the total number of observations in the (public/private) data set,
-      \item $p_i$ is your prediction of trip duration, and
-      \item $a_i$ is the actual trip duration for . 
-      \item $log$ is the natural logarithm of 
-    \end{itemize} 
+    \end{itemize}
   \end{itemize}
 \end{slide}
 
-\begin{slide}{Dataset}
+
+\section{Researching}
+
+\begin{slide}[toc=,bm=]{Overview of the Researching}
+\tableofcontents[content=currentsection,type=0]
+\end{slide}
+
+\begin{slide}{Problems One}
   \begin{itemize}
-    \item Take a look at the files
+    \item What is adversarial example, and why does it exist?
+  \end{itemize}
+\end{slide}
+
+\begin{slide}{Adversarial Example}
+  \begin{itemize}
+    \item What?
+    \begin{itemize}
+      \item Adversarial examples are those examples made by adding source examples with lightly distortion, which is well-designed on purpose to fooling a classifier to make a mistake.
+    \end{itemize}
+    \item Features \pause
+    \begin{itemize}
+      \item Fools classifiers \pause
+      \item Transitivity between different classifiers \pause
+      \item Too small to distinguish for human eyes \pause
+    \end{itemize}
+  \end{itemize}
+\end{slide}
+
+\begin{slide}{Nonlinearity of model}
+  \begin{itemize}
+    \item Why? \pause
+    \begin{itemize}
+      \item Nonlinearity of model \cite{RN143} \pause
       \begin{itemize}
-        \item train.csv - the training set (contains 1458644 trip records)
-        \item test.csv - the testing set (contains 625134 trip records)
-        \item sample_submission.csv - a sample submission file in the correct format
+        \item Formula for computing volume of n-dim sphere with radius of $R$: \pause
+        $$
+        V_{sphere} = K * R ^ n
+        $$ \pause
+        \item Rate of a sphere with radius of $0.9R$ in one with radius of $R$ in n-dim space: \pause
+        $$
+        proportion = \frac{K*(0.9*R)^n}{K*R^n} = 0.9^n
+        $$
+        \pause
+        \begin{figure}[h]
+          \centering
+          \includegraphics[width=0.5\textwidth]{figures3/density.eps}
+          \caption{Illumination of vulnerability of nonlinearity model}
+          \label{fig:illumination-of-nonlinearity}
+        \end{figure}
+      \end{itemize} 
+    \end{itemize}
+  \end{itemize}
+\end{slide}
+
+\begin{slide}{Linearity of model}
+  \begin{itemize}
+    \item Why?
+    \begin{itemize}
+      \item Nonlinearity of model \cite{RN143}
+      \item Linearity of model \cite{RN48} \pause
+      \begin{itemize}
+        \item Adversarial example $\tilde{x}$ with distortion $\eta$ for source $x$ in linear model: \pause
+        $$
+        \omega^T \tilde{x} = \omega^T x + \omega^T \eta, 
+        \left\|\eta\right\|_\infty \le \epsilon
+        $$ \pause
+        \item If $\epsilon $ equals to 1 which means 1 pixel, then to maxize the distortion $\omega^T\eta$: \pause
+        $$
+        \eta = sign(\omega)
+        $$ \pause
+        \item Then for average magnitude of $M$, the distortion is: \pause
+        $$
+        \omega^T\eta = \sum_{i=1}^{n}{\left\|\omega_i\right\|} = nM, \lim_{n\to\infty} \to \infty
+        $$
       \end{itemize}
-  \end{itemize}
-  \pause
-  \begin{figure}[h]
-    \centering
-    \includegraphics[width=1.0\textwidth]{figures2/train_data.eps}
-    \caption{train dataset}
-    \label{fig:train-dataset}
-  \end{figure}
-\end{slide}
-
-\begin{slide}{Preview}
-  \begin{itemize}
-    \item Overview train and test dataset
-  \end{itemize}
-  \pause
-  \begin{figure}[v]
-    \begin{minipage}[t]{0.8\linewidth}
-      \centering
-      \includegraphics[width=1.0\textwidth]{figures2/train_data_desc.eps}
-      \caption{Description of train dataset}
-      \label{fig:categories-picture}
-    \end{minipage} \pause
-    \vfill 
-    \begin{minipage}[t]{0.8\linewidth}
-      \centering
-      \includegraphics[width=1.0\textwidth]{figures2/test_data_desc.eps}
-      \caption{Description of test dataset}
-      \label{fig:pic-label1}
-    \end{minipage}
-  \end{figure}
-\end{slide}
-
-\begin{slide}{Missing values}
-  \begin{itemize}
-    \item Missing values?
-  \end{itemize}
-  \pause
-  \begin{figure}[h]
-    \centering
-    \includegraphics[width=0.6\textwidth]{figures2/train_null.eps}
-    \caption{Statistics of missing value}
-    \label{fig:missing-value-pic}
-  \end{figure}
-\end{slide}
-
-
-\section{Visualization}
-
-\begin{slide}[toc=,bm=]{Overview of Visualization}
-  \tableofcontents[content=currentsection,type=0]
-\end{slide}
-
-\begin{slide}{Review Features}
-  \begin{itemize}
-    \item Review features \pause
-    \begin{itemize}
-      \item Vendor id of the texi; \pause
-      \item Number of passengers; \pause
-      \item Geographic positions of picking up and dropoffing; \pause
-      \begin{itemize}
-        \item pickup_longitude, pickup_latitude
-        \item dropoff_longitude, dropoff_latitude
-      \end{itemize} \pause
-      \item Timestamps of picking up and dropoffing; \pause
-      \begin{itemize}
-        \item pickup_datetime
-        \item dropoff_datetime
-      \end{itemize} \pause
-      \item A flag indicates if the trip record was sent with delay
     \end{itemize}
   \end{itemize}
 \end{slide}
 
-\begin{slide}{Geographic}
+\begin{slide}{Problems Two}
   \begin{itemize}
-    \item Pickup vs dropoff positions
-  \end{itemize}
-  \begin{figure}[h]
-    \centering
-    \includegraphics[width=0.8\textwidth]{figures2/action_geo.eps}
-    \caption{Pickup vs dropoff locations plot}
-    \label{fig:pickup-dropoff-position}
-  \end{figure}
-\end{slide}
-
-\begin{slide}{Geographic-Duration}
-  \begin{itemize}
-    \item Faraway position has less relation with large duration 
-  \end{itemize}
-  \begin{figure}[h]
-    \centering
-    \includegraphics[width=0.8\textwidth]{figures2/duration_geo.eps}
-    \caption{Faraway position affact on duration plot}
-    \label{fig:geographic-duration}
-  \end{figure}
-\end{slide}
-
-\begin{slide}{Clean Geographic}
-  \begin{itemize}
-    \item Keep data which stay in range [0.001\%, 99.999\%] of original data
-  \end{itemize}
-  \begin{figure}[h]
-    \centering
-    \includegraphics[width=0.8\textwidth]{figures2/cleaned_position.eps}
-    \caption{Origin vs cleaned locations plot (pickup)}
-    \label{fig:cleaning-geographic}
-  \end{figure}
-\end{slide}
-
-\begin{slide}{Cleaned Geographic}
-  \begin{itemize}
-    \item Pickup vs dropoff positions (cleaned)
-  \end{itemize}
-  \begin{figure}[h]
-    \centering
-    \includegraphics[width=0.8\textwidth]{figures2/pd.eps}
-    \caption{Pickup vs dropoff locations plot (cleaned)}
-    \label{fig:clean-geographic}
-  \end{figure}
-\end{slide}
-
-
-\begin{slide}{Vendor Id}
-  \begin{itemize}
-    \item Count plot
-  \end{itemize}
-  \begin{figure}[h]
-    \centering
-    \includegraphics[width=0.6\textwidth]{figures2/vendor_id.eps}
-    \caption{Count by vendor id}
-    \label{fig:vendor-id}
-  \end{figure}
-\end{slide}
-
-\begin{slide}{Vendor Id - Passenger count}
-  \begin{itemize}
-    \item Count plot splited by passenger count
-  \end{itemize}
-  \begin{figure}[h]
-    \centering
-    \includegraphics[width=0.7\textwidth]{figures2/vendor_id_count.eps}
-    \caption{Count by vendor id and passenger id}
-    \label{fig:vendor-id-passenger-count}
-  \end{figure}
-\end{slide}
-
-\begin{slide}{Vendor Id - Geographic location}
-  \begin{itemize}
-    \item Count plot splited by geographic location
-  \end{itemize}
-  \begin{figure}[h]
-    \centering
-    \includegraphics[width=1.0\textwidth]{figures2/vendor_geo.eps}
-    \caption{Vendor id in geographic}
-    \label{fig:categories-picture}
-  \end{figure}
-\end{slide}
-
-
-\begin{slide}{Passenger count}
-  \begin{itemize}
-    \item Count trips by passenger count in train/test dataset
-    \item Both proportions for passengers count are: 0.709, 0.144, 0.041, 0.019, 0.054, 0.033, 0.000, 0.000, 0.000 \pause
-    \begin{figure}[h]
-      \begin{minipage}[t]{0.4\linewidth}
-        \centering
-        \includegraphics[width=1.0\textwidth]{figures2/passenger_count_train.eps}
-        \caption{Count trips in train dataset by passenger count}
-        \label{fig:count-by-passenger-count}
-      \end{minipage}
-      \pause
-      \hfill
-      \begin{minipage}[t]{0.4\linewidth}
-        \centering
-        \includegraphics[width=1.0\textwidth]{figures2/passenger_count_test.eps}
-        \caption{Count trips in test dataset by passenger count}
-        \label{fig:count-by-passenger-count-test}
-      \end{minipage} 
-    \end{figure}
+    \item What is adversarial example, and why does it exist?
+    \item How to generate an adversarial example that fools a given classifier?
   \end{itemize}
 \end{slide}
 
-
-\begin{slide}{Store and fwd}
+\begin{slide}{How to Attack}
   \begin{itemize}
-    \item Store and fwd count plot
+    \item What we want to do? \pause
     \begin{figure}[h]
       \centering
-      \includegraphics[width=0.6\textwidth]{figures2/store_and_fwd_flag.eps}
-      \caption{Store and fwd count plot}
-      \label{fig:store-and-fwd}
-    \end{figure}
-  \end{itemize}
-\end{slide}
-
-\begin{slide}{Timestamps} month_count
-  \begin{itemize}
-    \item Count by different time frame in one day
-    \begin{figure}[h]
-      \begin{minipage}[t]{0.3\linewidth}
-        \centering
-        \includegraphics[width=1.0\textwidth]{figures2/pickup_hour_distribution.eps}
-        \caption{Trip count by time frame in one day}
-        \label{fig:timestamps-picture}
-      \end{minipage} 
-      \pause
-      \hfill
-      \begin{minipage}[t]{0.6\linewidth}
-        \centering
-        \includegraphics[width=1.0\textwidth]{figures2/month_count.eps}
-        \caption{Trip count by month}
-        \label{fig:count-by-passenger-count-test}
-      \end{minipage} 
-    \end{figure}
-
-    \begin{figure}[h]
+      \includegraphics[width=0.5\textwidth]{figures3/wannado.eps}
+      \caption{Illumination of cross the line}
+      \label{fig:illumination-of-wannado}
+    \end{figure} \pause
+    \item How to do it? \pause
+    \begin{itemize}
+      \item Solve the formula:
+      \begin{equation}
+        \begin{split}
+        &\min{\eta} \\
+        &s.t. f(x+\eta) = target \pause \Leftrightarrow s.t. argmax(preds) = target
+        \end{split}
+      \end{equation} \pause
       
+    \end{itemize}
+  \end{itemize}
+\end{slide}
+
+\begin{slide}{Solve the problem}
+  \begin{itemize}
+    \item Formula:
+    \begin{equation}
+      \begin{split}
+      &\min{\eta} \\
+      &s.t. argmax(preds) = target
+      \end{split}
+    \end{equation}  \pause
+    \item It is hard to solve this problem directly \pause
+    \begin{itemize}
+      \item Convert to unbounded problems \pause
+    \end{itemize}
+    \item Approximate the optimal solution \pause
+    \begin{itemize}
+      \item Gradient descent methods, like RMSprop, Momentum, Adam, etc.
+    \end{itemize}
+  \end{itemize}
+\end{slide}
+
+
+\section{Defenses}
+
+\begin{slide}[toc=,bm=]{Overview of the Defenses}
+\tableofcontents[content=currentsection,type=0]
+\end{slide}
+
+\begin{slide}{Adversarial training}
+  \begin{itemize}
+    \item Adversarial training \cite{gong2017adversarial} \pause
+    \begin{figure}[h]
+      \begin{minipage}[t]{0.45\linewidth}
+        \centering
+        \includegraphics[width=1.0\textwidth]{figures3/beforeat.eps}
+        \caption{Before Adversarial Training}
+        \label{fig:before-at}
+      \end{minipage} 
+      \pause
+      \begin{minipage}[t]{0.45\linewidth}
+        \centering
+        \includegraphics[width=1.0\textwidth]{figures3/afterat.eps}
+        \caption{After Adversarial Training}
+        \label{fig:after-at}
+      \end{minipage}
     \end{figure}
   \end{itemize}
 \end{slide}
 
-\begin{slide}{Trip Duration}
+\begin{slide}{Distilling}
   \begin{itemize}
-    \item Trip duration
+    \item Distilling \cite{RN49} \pause
     \begin{figure}[h]
       \centering
-      \includegraphics[width=0.6\textwidth]{figures2/distence_trip_duration_relation.eps}
-      \caption{Relation between distance and Trip duration}
-      \label{fig:trip-duration-distribution-picture}
+      \includegraphics[width=0.7\textwidth]{figures3/distilled.eps}
+      \caption{Distilled model}
+      \label{fig:distilled-model}
     \end{figure}
   \end{itemize}
 \end{slide}
 
-
-\section{Data Preprocess}
-
-\begin{slide}[toc=,bm=]{Overview of Data Preprocess}
-  \tableofcontents[content=currentsection,type=0]
-\end{slide}
-
-\begin{slide}{Clean}
+\begin{slide}{Gradient Masking}
   \begin{itemize}
-    \item Exclude out outliers in geographic \pause
-    \item Exclude out outliers by passenger count \pause
-    \item Exclude out outliers in trip duration (labels) \pause
+    \item Select or construct model that has small gradient \pause
+    \begin{itemize}
+      \item Affect the model's accuracy
+      \item More hard to train 
+    \end{itemize}
   \end{itemize}
 \end{slide}
 
-\begin{slide}{Append}
+% \begin{slide}{Problems Four}
+%   \begin{itemize}
+%     \item How could I make sure the generated adversarial example also fools the oracle? \pause
+%     \begin{itemize}
+%       \item Adversarial examples are transmissible.
+%     \end{itemize}
+%   \end{itemize}
+% \end{slide}
+
+
+\section{Attackers}
+
+\begin{slide}[toc=,bm=]{Overview of the Attackers}
+\tableofcontents[content=currentsection,type=0]
+\end{slide}
+
+\begin{slide}{L-BFGS\cite{RN143}}
   \begin{itemize}
-    \item Distance, manhattan distance and haversine distance \pause
-    \item Weekday, weekend, month, day, hour \pause
-    \item Exclude out outliers in trip duration (labels) \pause
-    \item Area
+    \item Solve the formula:
+      \begin{equation}
+        \begin{split}
+        &\min {\eta} \\
+        &s.t. argmax(preds) = target
+        \end{split}
+      \end{equation} \pause
+    \item Convert to an unbounded problem: \pause
+    \begin{equation}
+      \begin{split}
+      min{c\vert\eta\vert + cross_entropy_loss_f(x+\eta, target)}
+      \end{split}
+    \end{equation} 
+    \item Approximate the optimal $\eta^*$ by L-BFGS method
+  \end{itemize}
+\end{slide}
+
+\begin{slide}{FGSM\cite{RN48}}
+  \begin{itemize}
+    \item Solve the formula:
+      \begin{equation}
+        \begin{split}
+        &\min {\eta} \\
+        &s.t. argmax(preds) = target
+        \end{split}
+      \end{equation} \pause
+    \item Convert to dual problem: \pause
+      \begin{equation}
+        \begin{split}
+        &\max {\vert f(x+\eta)-f(x) \vert} \\
+        &s.t. \eta \le \epsilon
+        \end{split}
+      \end{equation} \pause
+    \item Given the gradient $\bigtriangledown_xJ(x, y)$, we get:
+      \begin{equation}
+        \begin{split}
+          \eta^* = sign(\bigtriangledown_xJ(x, y))
+        \end{split}
+      \end{equation} \pause
+    \item Under the linear model, we get:
+    \begin{equation}
+      \begin{split}
+        \eta^* = sign(\omega)
+      \end{split}
+    \end{equation}
+  \end{itemize}
+\end{slide}
+
+\begin{slide}{FGM}
+  \begin{itemize}
+    \item FGM is a generalization fo FGSM
+    \item Instead of just take the sign:
+      \begin{equation}
+        \begin{split}
+          \eta^* = sign(\bigtriangledown_xJ(x, y))
+        \end{split}
+      \end{equation} \pause
+    \item Take the gradient directly:
+    \begin{equation}
+      \begin{split}
+        \eta^* = \bigtriangledown_xJ(x, y)
+      \end{split}
+    \end{equation}
+  \end{itemize}
+\end{slide}
+
+\begin{slide}{I-FGM}
+  \begin{itemize}
+    \item Improve version of FGM \pause
+    \item Instead of one-step approach:
+    \begin{equation}
+      \begin{split}
+        \eta^* = \bigtriangledown_xJ(x, y)
+      \end{split}
+    \end{equation}
+    \item Iteratively apply FGM:
+    \begin{equation}
+      \begin{split}
+        \eta^* &= \eta^* + \frac{\bigtriangledown_xJ(x_{k}, y)}{\|\bigtriangledown_xJ(x_{k}, y)\|} \\
+        x_{k+1} &= x_{k} + \alpha \dot \eta^*
+      \end{split}
+    \end{equation}
+  \end{itemize}
+\end{slide}
+
+\begin{slide}{IM-FGM\cite{RN144}}
+  \begin{itemize}
+    \item Based on I-FGM: \pause
+    \begin{equation}
+      \begin{split}
+        \eta^* &= \eta^* + \frac{\bigtriangledown_xJ(x_{k}, y)}{\|\bigtriangledown_xJ(x_{k}, y)\|} \\
+        x_{k+1} &= x_{k} + \alpha \dot \eta^*
+      \end{split}
+    \end{equation} \pause
+    \item Improve with momentum: \pause
+    \begin{equation}
+      \begin{split}
+        \eta^* &= \eta^* + \alpha \frac{g_{k+1}}{\|g_{k+1}\|} \\
+        x_{k+1} &= x_{k} + \alpha \dot \eta^* \\
+        g_{k+1} &= \mu \dot g_k + \frac{\bigtriangledown_xJ(x_{k}, y)}{\|\bigtriangledown_xJ(x_{k}, y)\|}
+      \end{split}
+    \end{equation}
+  \end{itemize}
+\end{slide}
+
+\begin{slide}{C\&W\cite{RN139}}
+  \begin{itemize}
+    \item Solve the formula:
+      \begin{equation}
+        \begin{split}
+        &\min {\eta} \\
+        &s.t. argmax(preds) = target
+        \end{split}
+      \end{equation} \pause
+    \item Convert to unbounded problem \pause
+    \begin{equation}
+      \begin{split}
+      \min {\alpha\|\eta\|_2 + max\{Z(x)_{i\neq target}\}-Z(x)_{target}}
+      \end{split}
+    \end{equation} \pause
     \begin{figure}[h]
-      \centering
-      \includegraphics[width=0.5\textwidth]{figures2/area.eps}
-      \caption{Split into different areas}
-      \label{fig:area-geo}
+      \begin{minipage}[t]{0.25\linewidth}
+        \centering
+        \includegraphics[width=1.0\textwidth]{figures3/feasible.eps}
+        \caption{Feasible solution}
+        \label{fig:feasible-solution}
+      \end{minipage} 
+      \pause
+      \begin{minipage}[t]{0.25\linewidth}
+        \centering
+        \includegraphics[width=1.0\textwidth]{figures3/optimal.eps}
+        \caption{Optimal}
+        \label{fig:optimal-solution}
+      \end{minipage}
     \end{figure}
   \end{itemize}
 \end{slide}
 
 
-\begin{slide}{Normalization}
+\begin{slide}{EAD\cite{RN139}}
   \begin{itemize}
-    \item Standard Normalization 
-    $$
-    z = \frac{X-\mu}{\delta}
-    $$
-    \pause
-    \item MinMax Scaler
-    $$
-    z = \frac{X-min}{max-min}
-    $$
-    \pause
-    \item Use MinMax Scaler for distance, timestamps, passenger count, vendor id \pause
-    \item Use Standard Normalization Scaler for the others \pause
-  \end{itemize}
-\end{slide}
-
-
-\section{Model Selection}
-
-\begin{slide}{RandomForestRegresser}
-  \begin{itemize}
-    \item Composed of multi classification and regression Trees \pause
-    \item No need for features selection \pause
-    \item Simple, stable
-  \end{itemize}
-\end{slide}
-
-\begin{slide}{Xgboost}
-  \begin{itemize}
-    \item Weighting on examples
-    \item Support sampling on features \pause
-  \end{itemize}
-\end{slide}
-
-\begin{slide}{LightGBM}
-  \begin{itemize}
-    \item Optimal Split for Categorical Features \pause
-    \item Leaf-wise (Best-first) Tree Growth \pause
-    \item Faster training speed and higher efficiency \pause
-    \item Lower memory usage \pause
-    \item Better accuracy \pause
-  \end{itemize}
-\end{slide}
-
-
-\section{Experiment}
-
-\begin{slide}{First shot}
-  \begin{itemize}
-    \item RandomForestRegresser
+    \item Based on C\&W: \pause
+    \begin{equation}
+      \begin{split}
+      \min {\alpha\|\eta\|_2 + max\{Z(x)_{i\neq target}\}-Z(x)_{target}}
+      \end{split}
+    \end{equation} \pause
+    \item Add one more limit condition:
+    \begin{equation}
+      \begin{split}
+      \min {\alpha\|\eta\|_1 + \beta\|\eta\|_2 + max\{Z(x)_{i\neq target}\}-Z(x)_{target}}
+      \end{split}
+    \end{equation} \pause
+    \item Solve with ISTA:
     \begin{itemize}
-      \item Without cleaning or new feature
-      \item Run with default parameters
-      \item 5-fold Cross Validataion
-      \item Score of train/validation/submission: 0.53484/0.53213/0.55944
+      \item Given that:
+      \begin{equation}
+        \begin{split}
+          g(x) &= \beta\|\eta\|_2 + max\{Z(x)_{i\neq target}\}-Z(x)_{target}
+        \end{split}
+      \end{equation}
+      \item Compute iteratively:
+      \begin{equation}
+        \begin{split}
+          x_{k+1} &= S_{\beta}(x_{k} + \alpha \bigtriangledown_g(x_k))
+        \end{split}
+      \end{equation}
     \end{itemize}
   \end{itemize}
 \end{slide}
 
+\section{Experiments}
 
-\begin{slide}{Try with operations on features}
-  \begin{itemize}
-    \item RandomForestRegresser
-    \begin{itemize}
-      \item With cleaning, new-feature and normalization
-      \item GridSearchCV in n_estimators and max_depth
-      \item 5-fold Cross Validataion
-      \item Score of train/validation/submission: 0.43956/0.44046/0.44709
-      \item std in train/validation: 0.00052/0.00064 
-      \begin{figure}[h]
-        \begin{minipage}[t]{0.4\linewidth}
-          \centering
-          \includegraphics[width=1.0\textwidth]{figures2/rfr-estimator.eps}
-          \caption{Rfr scores var different n estimators}
-          \label{fig:rfr-estimators}
-        \end{minipage}
-        \hfill
-        \begin{minipage}[t]{0.4\linewidth}
-          \centering
-          \includegraphics[width=1.0\textwidth]{figures2/max_depth_score.eps}
-          \caption{pictures labeled as 1}
-          \label{fig:rfr-max-depth}
-        \end{minipage} 
-      \end{figure}
-    \end{itemize}
-  \end{itemize}
+\begin{slide}[toc=,bm=]{Overview of the Researching}
+\tableofcontents[content=currentsection,type=0]
 \end{slide}
 
-\begin{slide}{Try with new model}
+\begin{slide}{Plan}
   \begin{itemize}
-    \item LightGBM
-    \begin{itemize}
-      \item With cleaning, new-feature and normalization
-      \item GridSearch in max_depth, n_estimators, 
-      \item 5-fold Cross Validataion \pause
-      \item Score of submission: 0.420020
-      \item std in train/validation: 0.00111/0.00078 \pause 
-      \begin{figure}[h]
-        \begin{minipage}[t]{0.4\linewidth}
-          \includegraphics[width=1.0\textwidth]{figures2/lgb_max_depth.eps}
-          \caption{Lgb scores var in maxdepth}
-          \label{fig:lgb-max-depth}
-        \end{minipage}
-        \hfill
-        \begin{minipage}[t]{0.4\linewidth}
-          \centering
-          \includegraphics[width=1.0\textwidth]{figures2/lgb_n_leaves.eps}
-          \caption{Lgb scores var in n estimators and min leaves}
-          \label{fig:lgb-n-leaves}
-        \end{minipage} 
-      \end{figure}
-    \end{itemize}
-  \end{itemize}
-\end{slide}
-
-\begin{slide}{Try with different boosting type of LightGBM model}
-  \begin{itemize}
-    \item LightGBM
-    \begin{itemize}
-      \item With cleaning, new-feature and normalization
-      \item GridSearch in boosting type: 'default', 'dart', 'goss', 'rf'
-      \item 5-fold Cross Validataion \pause
-      \item Worse than the default
-    \end{itemize}
+    \item Build a distilled model as the oracle enabled defense \pause
+    \item Create attackers to attack the local oracle \pause
+    \item Test and evaluate them on Mnist dataset first \pause
+    \item Select and fine tune attackers \pause
+    \item Test and evaluate on the given dataset \pause
   \end{itemize}
 \end{slide}
 
 
-\begin{slide}{Rank of Competition}
-  \begin{itemize}
-    \item Score: 0.41895
-    \item Rank: 545/1207
-  \end{itemize}
-  \begin{figure}[h]
-    \centering
-    \includegraphics[width=0.8\textwidth]{figures2/score.eps}
-    \caption{Result of the best submission}
-    \label{fig:result-of-best-submission}
-  \end{figure} 
-\end{slide}
+% \begin{slide}{Rank of Competition}
+%   \begin{itemize}
+%     \item Score: 0.41895
+%     \item Rank: 545/1207
+%   \end{itemize}
+%   \begin{figure}[h]
+%     \centering
+%     \includegraphics[width=0.8\textwidth]{figures2/score.eps}
+%     \caption{Result of the best submission}
+%     \label{fig:result-of-best-submission}
+%   \end{figure} 
+% \end{slide}
 
 
 \section{Summary}
@@ -571,13 +601,14 @@ list={labelsep=1em,leftmargin=*,itemsep=0pt,topsep=5pt,parsep=0pt},
     \item Thanks for listening~
   \end{itemize}
 \end{slide}
-
+  
 % \begin{slide}{References (1)}
 % \bibliographystyle{plain}
 % \nobibliography{YourBib}
 % \bibentry{someone1}
 % \bibentry{someone2}
 % \end{slide}
+
 % \begin{slide}{References (2)}
 % \bibentry{someone3}
 % \end{slide}
@@ -586,10 +617,10 @@ list={labelsep=1em,leftmargin=*,itemsep=0pt,topsep=5pt,parsep=0pt},
 % \cite{someone}
 % \end{slide}
 % 
-% \begin{slide}{References}
-% \bibliographystyle{plain}
-% % \bibliography{YourBib}
-% \end{slide}
+\begin{slide}{References}
+  \bibliographystyle{plain}
+  \bibliography{mybib}
+\end{slide}
 
 \end{document}
 
